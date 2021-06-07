@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button onclick="login()">Login</button>
+        <button onclick="signUp()">Sign Up</button>
+        <button onclick="menu()">Menu</button>
+    </div>
+    <div id="cont">
+        <form id="form">
+            <input type="text" placeholder="Email" id="email">
+            <input type="text" placeholder="Password" id="password">
+        </form>
+        <button onclick="loggedIn()">Login</button>
+    </div>
+</body>
+</html>
+
+<script>
+
+        function signUp() {
+            window.location.href = "signup.html";
+        }
+
+        function menu() {
+            window.location.href = "menu.html";
+        }
+
+        function loggedIn(){
+            let data = localStorage.getItem("user");
+            data = JSON.parse(data);
+            let form = document.getElementById("form");
+            let email = form.email.value;
+            let password = form.password.value;
+
+            let count = 0;
+            for(let i =0;i < data.length; i++){
+                if(email === data[i].email && password === data[i].password){
+                    count = 1;
+                    break
+                }else{
+                    count = 0;
+                }
+            }
+            if(count == 1){
+                window.location.href = "menu.html"
+            }else {
+                alert("Invalid Credential!")
+            }
+            form.reset();
+        }
+</script>

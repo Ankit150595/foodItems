@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button onclick="login()">Login</button>
+        <button onclick="signUp()">Sign Up</button>
+        <button>Menu</button>
+    </div>
+    <button onclick="goToCart()">Go to Cart</button>
+</body>
+</html>
+
+<script>
+      function login() {
+            window.location.href = "login.html";
+        }
+
+        function signUp() {
+            window.location.href = "signup.html";
+        }
+
+       let parent = document.querySelector("body");
+
+       const object = [
+           {
+               image: "https://via.placeholder.com/140x100",
+               price: 250,
+               description: "Cheese chilli",
+               preparationTime: 30 
+           },
+
+           {
+               image: "https://via.placeholder.com/140x100",
+               price: 400,
+               description: "Chicken",
+               preparationTime: 40
+           },
+
+           {
+               image: "https://via.placeholder.com/140x100",
+               price: 100,
+               description: "Pasta",
+               preparationTime: 15
+           }
+       ]
+
+       if(localStorage.getItem("order")== null){
+           localStorage.setItem("order", JSON.stringify(object))
+        //    console.log(object);
+       }
+       let dishes = JSON.parse(localStorage.getItem("order"));
+       let dishDiv = document.createElement("div");
+       dishDiv.setAttribute("class","dishDiv");
+       console.log(dishes);
+       
+       parent.insertBefore(dishDiv, parent.lastElementChild);
+
+       function printDishes(food){
+          food.forEach(function(el) {
+              let foodDiv = document.createElement("div");
+              foodDiv.setAttribute("class","foodDiv");
+
+              let posterDiv = document.createElement("div");
+              posterDiv.setAttribute("class", "posterDiv");
+
+              let infoDiv = document.createElement("div");
+              infoDiv.setAttribute("class", "infoDiv");
+
+              let p_des = document.createElement("p");
+               p_des.innerHTML = `<strong>Description: </strong> ${el.description}`;
+
+               
+              let p_price = document.createElement("p");
+              p_price.innerHTML = `<strong>Price: </strong> ${el.price}`;
+
+              
+              let p_prepTime = document.createElement("p");
+              p_prepTime.innerHTML = `<strong>Preparation Time: </strong> ${el.preparationTime} min`;
+
+              let img = document.createElement("img");
+              img.src = el.image;
+              
+              let btn = document.createElement("button");
+              btn.innerHTML = "Add to Cart"
+              btn.onclick = function(){
+                  addToCart(el);
+              }
+
+              posterDiv.append(img);
+              infoDiv.append(p_des, p_price,p_prepTime,btn)
+              foodDiv.append(posterDiv, infoDiv);
+              dishDiv.append(foodDiv);
+          });
+       }
+       printDishes(dishes)
+
+       function addToCart(el){
+        let arr = localStorage.getItem("myFood");
+        if(arr == null){
+            arr = [];
+            arr.push(el);
+            localStorage.setItem("myFood", JSON.stringify(arr));
+
+        }
+
+       }
+
+       function goToCart(){
+           window.location.href = "cart.html"
+       }
+</script>

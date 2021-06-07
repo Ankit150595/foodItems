@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
+
+<script>
+    let data = JSON.parse(localStorage.getItem("myFood"));
+    let parent = document.querySelector("body")
+    let container = document.getElementById("container");
+    
+
+    data.forEach(function (el) {
+            let foodDiv = document.createElement("div");
+            foodDiv.setAttribute("class", "foodDiv");
+
+            let posterDiv = document.createElement("div");
+            posterDiv.setAttribute("class", "posterDiv");
+
+            let infoDiv = document.createElement("div");
+            infoDiv.setAttribute("class", "infoDiv");
+
+            let p_des = document.createElement("p");
+            p_des.innerHTML = `<strong>Description: </strong> ${el.description}`;
+
+
+            let p_price = document.createElement("p");
+            p_price.innerHTML = `<strong>Price: </strong> ${el.price}`;
+
+
+            let p_prepTime = document.createElement("p");
+            p_prepTime.innerHTML = `<strong>Preparation Time: </strong> ${el.preparationTime} min`;
+
+            let img = document.createElement("img");
+            img.src = el.image;
+
+        posterDiv.append(img);
+        infoDiv.append(p_des, p_price, p_prepTime, btn)
+        foodDiv.append(posterDiv, infoDiv);
+        container.append(foodDiv);
+        
+    })
+    parent.append(container)
+
+</script>
